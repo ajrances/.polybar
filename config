@@ -1,0 +1,218 @@
+
+include-file = ~/.config/polybar/themes/slime.ini
+
+[bar/example]
+
+tray-padding = 2
+tray-position = right
+monitor = HDMI-0
+width =  100%
+height = 24pt
+
+padding-left = 1
+padding-right = 0
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+bottom = false
+border-top-size = 5
+border-bottom-size = 5
+border-top-color = ${colors.background}
+border-bottom-color = ${colors.background}
+
+line-size = 1
+wm-restack = bspwm
+
+modules-left = launcher sep round-left openbox round-right sep xwindow
+modules-center = mpd
+modules-right = alsa round-left cpu round-right sep round-left cputemp round-right sep round-left mem round-right sep round-left time round-right powermenu
+
+font-0 = "Iosevka Nerd Font:style=bold:size=11;2"
+font-1 = "Iosevka Nerd Font:size=12;3"
+font-2 = "Iosevka Nerd Font:size=15;4"
+font-3 = "Iosevka Nerd Font:size=10;4"
+font-4 = "Iosevka:style=bold:size=10;4"
+font-5 = "Font Awesome:size 10;4"
+
+[module/sep]
+type = custom/text
+content = " "
+
+[module/round-left]
+
+type = custom/text
+content = %{T3}%{T-}
+content-foreground = ${colors.background-alt}
+
+[module/round-right]
+
+type = custom/text
+content = %{T3}%{T-}
+content-foreground = ${colors.background-alt}
+
+[module/openbox]
+type = internal/xworkspaces
+
+pin-workspaces = true
+enable-click = true
+enable-scroll = true
+
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;漣
+icon-default = 
+
+format = <label-state>
+format-background = ${colors.background-alt}
+format-font = 3
+
+label-monitor = %name%
+
+label-active = ﱣ
+label-active-foreground = ${colors.primary}
+; label-active-background = ${colors.background}
+; label-active-underline = ${colors.background-alt}
+
+label-occupied = 綠
+label-occupied-foreground = ${colors.foreground}
+; label-occupied-background = ${colors.background}
+; label-occupied-underline = ${color.BGA}
+
+label-urgent = ﱣ
+label-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.background}
+; label-urgent-underline = ${color.BGA}
+
+label-empty = 祿
+label-empty-foreground = ${colors.black}
+; label-empty-background = ${colors.background}
+
+label-active-padding = 1
+label-urgent-padding = 1
+label-occupied-padding = 1
+label-empty-padding = 1
+
+[module/alsa]
+
+type = internal/alsa
+format-volume = <label-volume> <bar-volume>
+label-volume = " "  
+label-volume-foreground = ${colors.foreground}
+format-muted-foreground = ${colors.black}
+label-muted = "婢  muted"
+
+format-muted-padding = 1
+
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.secondary}
+bar-volume-foreground-1 = ${colors.secondary}
+bar-volume-foreground-2 = ${colors.secondary}
+bar-volume-foreground-3 = ${colors.secondary}
+bar-volume-foreground-4 = ${colors.secondary}
+bar-volume-foreground-5 = ${colors.secondary}
+bar-volume-foreground-6 = ${colors.secondary}
+bar-volume-gradient = false
+bar-volume-indicator = 
+bar-volume-indicator-foreground = ${colors.secondary}
+bar-volume-indicator-font = 2
+bar-volume-fill = ━ 
+bar-volume-fill-foreground = ${colors.secondary}
+bar-volume-fill-font = 2
+bar-volume-empty = ━
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.disabled}
+format-volume-padding = 2
+
+[module/mpd]
+type = internal/mpd
+
+; Host where mpd is running (either ip or domain name)
+; Can also be the full path to a unix socket where mpd is running.
+host = 127.0.0.1
+port = 6600
+; password = mysecretpassword
+
+; Seconds to sleep between progressbar/song timer sync
+; Default: 1
+interval = 1
+format-online = <label-song>
+label-song =   %artist% - %title%
+label-song-foreground = ${colors.yellow}
+
+[module/time]
+
+type = internal/date
+interval = 60
+
+format = <label>
+format-background = ${colors.background-alt}
+format-foreground = ${colors.gray}
+date =   %I:%M %p
+time-alt = %a %b %d
+label = %date%%time%
+
+[module/mem]
+
+type = custom/script
+exec = free -m | sed -n 's/^Mem:\s\+[0-9]\+\s\+\([0-9]\+\)\s.\+/\1/p'
+format = <label>
+format-prefix = "﬙  " 
+label = %output% MB
+format-background = ${colors.background-alt}
+format-foreground = ${colors.orange}
+
+[module/launcher]
+type = custom/text
+content ="� "
+click-left = rofi -show drun
+content-foreground = ${colors.green}
+label-padding-right = 1
+
+[module/powermenu]
+type = custom/text 
+content ="" 
+content-padding = 2
+click-left = rofi -show power-menu -modi power-menu:rofi-power-menu
+content-foreground = ${colors.alert}
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+format-connected =  <label-connected>
+label-connected = "󰤪  " 
+label-connected-foreground = #A3BE8C 
+
+[module/weather]
+type = custom/script
+exec = ~/.config/polybar/scripts/weather.sh
+tail = false
+interval = 600
+
+[module/cpu]
+
+type = internal/cpu
+interval = 2.5
+
+format-prefix ="  " 
+format =  <label> 
+
+label = CPU %percentage%%
+format-background = ${colors.background-alt}
+format-foreground = ${colors.magenta}
+
+[module/xwindow]
+
+type = internal/xwindow
+label = %title:0:30:...%
+label-foreground = ${colors.cyan}
+
+[module/cputemp]
+type = custom/script
+exec = sensors | grep "Package id 0:" | tr -d '+' | awk '{print $4}'
+format-prefix = " "
+format-background = ${colors.background-alt}
+format-foreground = ${colors.teal}
+interval = 2
