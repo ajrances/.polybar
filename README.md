@@ -1,4 +1,5 @@
 # .polybar
-This is my  polybar dots and newly created theme called slime.
-Basically this is a fork from slime theme of vscode 
-here is the repo is where i based on https://github.com/smlombardi/theme-slime
+This is my version of the slime theme of polybar dots.
+It is basically a fork of the VSCode slime theme.
+Here is the repository on which I based the most of of the color schemes.
+Theme-Slime: https://github.com/smlombard
